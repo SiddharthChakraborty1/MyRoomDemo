@@ -18,6 +18,7 @@ import com.example.myroomdemo.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private lateinit var subscriberViewModel: SubscriberViewModel
+    private  lateinit var adapter: RecyclerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -42,7 +43,9 @@ class MainActivity : AppCompatActivity() {
     private fun showData(){
         subscriberViewModel.subscribers.observe(this, Observer {
             Log.i("MYTAG", it.toString())
-            binding.subscriberRecyclerView.adapter = RecyclerAdapter(it, {selectedItem: Subscriber -> listItemClicked(selectedItem)})
+            adapter.setListOfSubscribers(it)
+            adapter.notifyDataSetChanged()
+
 
         })
 
@@ -50,7 +53,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView(){
+        adapter =  RecyclerAdapter({selectedItem: Subscriber -> listItemClicked(selectedItem)})
         binding.subscriberRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.subscriberRecyclerView.adapter = adapter
+
         showData()
     }
 

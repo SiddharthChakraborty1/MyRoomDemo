@@ -11,9 +11,10 @@ import com.example.myroomdemo.databinding.ActivityMainBinding.bind
 import com.example.myroomdemo.databinding.ActivityMainBinding.inflate
 import com.example.myroomdemo.databinding.RecyclerViewItemLayoutBinding
 
-class RecyclerAdapter(private val subscribersList: List<Subscriber>, private val clickListener: (Subscriber) -> Unit): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
+class RecyclerAdapter( private val clickListener: (Subscriber) -> Unit): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
 
 
+    private val subscribersList: ArrayList<Subscriber> = ArrayList<Subscriber>()
 
 
     class ViewHolder(val binding: RecyclerViewItemLayoutBinding) : RecyclerView.ViewHolder(binding.root){
@@ -34,6 +35,11 @@ class RecyclerAdapter(private val subscribersList: List<Subscriber>, private val
         return ViewHolder(binding)
 
 
+
+    }
+    fun setListOfSubscribers(subscribers: List<Subscriber>){
+        subscribersList.clear()
+        subscribersList.addAll(subscribers)
 
     }
 
